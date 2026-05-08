@@ -1,7 +1,7 @@
 
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getFirestore, doc, setDoc, getDoc, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getFirestore, doc, setDoc, getDoc, collection, addDoc, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     // ==========================================
     // 1. CORE CONFIGURATION
@@ -35,6 +35,14 @@ if (!window.RYAL_AI_KEY) {
     
     const auth = getAuth(app); 
     const db = getFirestore(app);
+    // --- ENABLE OFFLINE ENGINE ---
+    enableIndexedDbPersistence(db).catch((err) => {
+        if (err.code == 'failed-precondition') {
+            console.warn("Offline mode works best with only one tab open.");
+        } else if (err.code == 'unimplemented') {
+            console.warn("Browser doesn't support offline storage.");
+        }
+    });
 
     // GLOBAL STATE VARIABLES
     window.currentUser = null; 
@@ -1585,4 +1593,3 @@ window.installVipApp = async () => {
         window.deferredPrompt = null;
     }
 };
-
