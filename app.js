@@ -1231,12 +1231,17 @@ window.closeModalSafe = () => {
             return window.showAlert("Please enter a VIP ID.");
         }
 
-        // 1. Instantly hide the login box and show the dashboard area
         document.getElementById('vipLoginBox').style.display = 'none'; 
-        document.getElementById('vipDashboard').style.display = 'block'; 
+        const dashboard = document.getElementById('vipDashboard');
+        dashboard.style.display = 'block'; 
         
-        // 2. Inject the pulsing skeletons BEFORE we talk to the database
-        document.getElementById('vipDashboard').innerHTML = `
+        // 1. Hide the real dashboard elements safely without deleting them
+        Array.from(dashboard.children).forEach(child => child.style.display = 'none');
+        
+        // 2. Inject the skeleton as a temporary overlay
+        const skelDiv = document.createElement('div');
+        skelDiv.id = 'ryalTempSkeleton';
+        skelDiv.innerHTML = `
             <div style="text-align:center; margin-bottom:25px;">
                 <div class="skeleton-box skel-title" style="margin:0 auto 10px;"></div>
                 <div class="skeleton-box skel-text" style="width:40%; margin:0 auto;"></div>
@@ -1249,27 +1254,33 @@ window.closeModalSafe = () => {
             <div class="skeleton-box skel-card" style="height:120px;"></div>
             <div class="skeleton-box skel-card" style="height:120px;"></div>
         `;
+        dashboard.appendChild(skelDiv);
         
         try { 
-            // 3. Now we fetch the data from Firebase while the skeletons play
             const snap = await getDoc(doc(db, "vip_portals", id)); 
             
+            // 3. Remove the skeleton and unhide the real elements
+            const tempSkel = document.getElementById('ryalTempSkeleton');
+            if (tempSkel) tempSkel.remove();
+            Array.from(dashboard.children).forEach(child => child.style.display = '');
+
             if (snap.exists()) { 
                 window.vipDataStore = snap.data(); 
-                // 4. Once data arrives, this function smoothly overwrites the skeletons
                 window.renderLiveVIP(); 
             } else { 
-                // If it fails, revert the UI
                 document.getElementById('vipLoginBox').style.display = 'block'; 
-                document.getElementById('vipDashboard').style.display = 'none';
+                dashboard.style.display = 'none';
                 window.showAlert("Invalid VIP ID. Please check your link."); 
             } 
         } catch(e) { 
+            const tempSkel = document.getElementById('ryalTempSkeleton');
+            if (tempSkel) tempSkel.remove();
             document.getElementById('vipLoginBox').style.display = 'block'; 
-            document.getElementById('vipDashboard').style.display = 'none';
+            dashboard.style.display = 'none';
             window.showAlert("Portal Access Blocked: " + e.message); 
         } 
     };
+
 
 
     window.renderLiveVIP = () => { 
