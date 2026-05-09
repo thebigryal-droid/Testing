@@ -5,7 +5,7 @@ import { getFirestore, doc, setDoc, getDoc, collection, addDoc, enableIndexedDbP
 
     // ==========================================
     // 1. CORE CONFIGURATION
-    // ==========================================
+    // =========================================
     window.MASTER_ADMIN_EMAIL = "abisali1245@gmail.com"; // <-- Type your exact Google login email here
     window.RYAL_USDA_KEY = "rB7nbYA6O8O2Pi6WPAfgFBEwgvIdjF0Vz2mrvLTI";
     
