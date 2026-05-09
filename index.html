@@ -193,7 +193,9 @@
 <div class="section" id="sec-master-routine" style="display:none;">
 <h2 onclick="toggleSec('sec-master-routine')"><span><i data-feather="layers" style="width:16px;color:var(--warning);margin-right:8px;"></i> Master Routine Builder</span> <i data-feather="chevron-down"></i></h2>
 <div class="collapsible" style="display:block;">
-<input id="newSplitName" list="existingSplits" placeholder="Split Name" type="text"/><datalist id="existingSplits"></datalist>
+<input id="newSplitName" list="existingSplits" placeholder="Split Name" type="text"/>
+<datalist id="existingSplits">
+</datalist>
 <div style="display:flex; gap:12px;">
 <input id="newSplitEx" placeholder="Exercise to Add" type="text"/>
 <button class="btn-main" onclick="addExerciseToSplit()">Add</button>
@@ -343,7 +345,14 @@
 <div class="section active" style="border-top:4px solid #10b981;">
 <h2><span><i data-feather="wind" style="color:#10b981;margin-right:8px;"></i> Flexibility &amp; Mobility</span></h2>
 <div style="margin-top:15px;">
-<div style="display:flex; gap:10px;"><input id="mobDate" type="date"/><input id="mobMuscle" list="mobMuscleList" placeholder="Target Muscle" type="text"/><datalist id="mobMuscleList"><option value="Hamstrings"><option value="Hips"><option value="Shoulders"><option value="Lower Back"></option></option></option></option></datalist></div>
+<div style="display:flex; gap:10px;"><input id="mobDate" type="date"/><input id="mobMuscle" list="mobMuscleList" placeholder="Target Muscle" type="text"/>
+<datalist id="mobMuscleList">
+    <option value="Hamstrings"></option>
+    <option value="Hips"></option>
+    <option value="Shoulders"></option>
+    <option value="Lower Back"></option>
+</datalist>
+</div>
 <div style="display:flex; gap:8px;"><input id="aiMobilityInput" placeholder="AI: Joint (e.g. Tight Hips)" style="flex:2;margin-bottom:0;" type="text"/><button class="btn-main" id="aiMobGenerateBtn" onclick="generateAIMobility(false)" style="background:#10b981;color:white;flex:1;margin-bottom:0;padding:10px;">Get</button><button class="btn-sub" id="aiMobRefreshBtn" onclick="generateAIMobility(true)" style="color:#10b981;border-color:#10b981;margin-bottom:0;padding:10px;"><i data-feather="refresh-cw" style="margin:0;"></i></button></div>
 <div id="mobTagsContainer" style="display:flex; flex-wrap:wrap; gap:10px; margin:15px 0;"></div>
 <div style="display:flex; gap:10px;"><input id="mobExercise" placeholder="Stretch" style="flex:2;" type="text"/><input id="mobTime" placeholder="Secs" type="number"/><input id="mobSets" placeholder="Sets" type="number"/></div>
@@ -488,10 +497,9 @@
 </div>
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script type="module" src="app.js?v=1"></script>
 </body>
 </html>
+
