@@ -241,23 +241,20 @@
 <button class="btn-info" onclick="sendSupportTicket()">Send Message</button>
 </div>
 </div>
-<footer style="text-align:center; padding:30px 10px; font-size:11px; color:var(--text-muted); font-weight:800; letter-spacing:1px;">
-<i data-feather="cloud" style="width:14px;color:var(--primary);"></i> CLOUD SYNCED  •  RYAL FITHUB PRO
-    </footer>
-            <nav id="bottomNav">
-            <a onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
-                <i class="fas fa-chart-line"></i><span>Home</span>
-            </a>
-            <a onclick="document.getElementById('sec-rost').scrollIntoView({behavior: 'smooth'})">
-                <i class="fas fa-users"></i><span>Roster</span>
-            </a>
-            <a onclick="document.getElementById('sec-plan').scrollIntoView({behavior: 'smooth'})">
-                <i class="fas fa-calendar-alt"></i><span>Planner</span>
-            </a>
-            <a onclick="toggleMenu()">
-                <i class="fas fa-bars"></i><span>Menu</span>
-            </a>
-        </nav>
+<footer class="editorial-footer">
+    <div class="footer-brand">Ryal FitHub Pro</div>
+    <p class="footer-tagline">The Clinical Operating System for Elite Trainers & Sports Scientists.</p>
+    
+    <div class="footer-links">
+        <a href="#" onclick="showMenuSection('sec-support')">Platform Support <i class="fas fa-chevron-right"></i></a>
+        <a href="#" onclick="showMenuSection('sec-research')">Clinical Research Hub <i class="fas fa-chevron-right"></i></a>
+        <a href="#">Privacy Policy <i class="fas fa-chevron-right"></i></a>
+    </div>
+    
+    <div class="footer-bottom">
+        <i class="fas fa-cloud" style="color:#10b981;"></i> Cloud Synced &bull; &copy; 2026 Ryal FitHub
+    </div>
+</footer>
 </div>
 <div id="clientOverlay">
 <button class="btn-sub" onclick="document.getElementById('clientOverlay').style.display='none'" style="margin-bottom:20px; border-radius:20px; width:auto; display:inline-flex; background:var(--card);"><i data-feather="arrow-left"></i> Dashboard</button>
@@ -489,9 +486,20 @@
 <input id="vipSearchLib" oninput="searchVipLibrary(this.value)" placeholder="Search exercise videos..." style="margin-bottom:10px;" type="text"/>
 <div id="vipLibResults" style="max-height:200px;overflow-y:auto;"></div>
 </div>
-<footer style="text-align:center; padding:20px 10px; font-size:11px; color:var(--text-muted); font-weight:800; letter-spacing:1px; border-top:1px dashed var(--border); margin-top:20px;">
-<i data-feather="shield" style="width:14px;color:var(--info);"></i> POWERED BY RYAL FITHUB PRO
-        </footer>
+<footer class="editorial-footer" style="margin: 40px -20px -40px -20px;">
+    <div class="footer-brand">Ryal FitHub</div>
+    <p class="footer-tagline">Elite Personal Training, Biomechanics, & Clinical Nutrition.</p>
+    
+    <div class="footer-links">
+        <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">My Dashboard <i class="fas fa-chevron-right"></i></a>
+        <a href="#">Terms of Service <i class="fas fa-chevron-right"></i></a>
+    </div>
+    
+    <div class="footer-bottom">
+        <i class="fas fa-shield-alt" style="color:#10b981;"></i> Powered by Ryal FitHub Pro
+    </div>
+</footer>
+
 </div>
 </div>
 
