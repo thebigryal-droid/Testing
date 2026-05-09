@@ -16,12 +16,6 @@ import { getFirestore, doc, setDoc, getDoc, collection, addDoc, enableIndexedDbP
     const isVipLink = new URLSearchParams(window.location.search).get('vip');
 
 
-        if (window.RYAL_AI_KEY) {
-            localStorage.setItem("ryal_ai_secret_key", window.RYAL_AI_KEY);
-        }
-    }
-
-
     window.onerror = function(msg, url, line) { 
         console.error("RyalFit Error: " + msg + " at line " + line); 
     };
@@ -1657,4 +1651,3 @@ window.installVipApp = async () => {
         window.deferredPrompt = null;
     }
 };
-
