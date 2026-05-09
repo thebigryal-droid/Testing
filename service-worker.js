@@ -1,5 +1,5 @@
 
-const CACHE_NAME = 'fithub-cache-v2';
+const CACHE_NAME = 'fithub-cache-v4';
 
 const urlsToCache = [
   './',
