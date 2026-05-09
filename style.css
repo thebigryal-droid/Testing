@@ -186,48 +186,65 @@ body{
         min-height:44px;
     }
 }
+        /* --- EDITORIAL FOOTER (Healthline Style) --- */
+        .editorial-footer {
+            background-color: #111827; /* Deep editorial black */
+            color: #ffffff;
+            padding: 40px 20px 100px 20px; /* Extra bottom padding for the mobile nav bar */
+            margin: 40px -15px -100px -15px; /* Pulls it out to the edges of the screen */
+            text-align: left;
+        }
+        
+        .editorial-footer .footer-brand {
+            font-family: 'Oswald', sans-serif;
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+        
+        .editorial-footer .footer-tagline {
+            font-size: 14px;
+            color: #9ca3af;
+            margin: 0 0 30px 0;
+            line-height: 1.5;
+        }
+        
+        .editorial-footer .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin-bottom: 35px;
+            border-top: 1px solid #374151;
+            padding-top: 30px;
+        }
+        
+        .editorial-footer .footer-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-/* --- BOTTOM NAVIGATION BAR --- */
-#bottomNav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: var(--bg);
-    border-top: 1px solid var(--border);
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 12px 0 calc(12px + env(safe-area-inset-bottom));
-    z-index: 50000;
-    box-shadow: 0 -10px 30px rgba(0,0,0,0.03);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-}
-
-#bottomNav a {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: var(--text-muted);
-    text-decoration: none;
-    font-size: 10px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-#bottomNav a i {
-    font-size: 20px;
-    margin-bottom: 4px;
-}
-
-#bottomNav a:active {
-    color: var(--primary);
-    transform: scale(0.95);
-}
+        .editorial-footer .footer-links a i {
+            color: #4b5563;
+        }
+        
+        .editorial-footer .footer-bottom {
+            font-size: 11px;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
 /* --- SKELETON LOADERS --- */
 .skeleton-box {
