@@ -5,7 +5,7 @@ import { getFirestore, doc, setDoc, getDoc, collection, addDoc, enableIndexedDbP
 
     // ==========================================
     // 1. CORE CONFIGURATION
-    // =========================================
+    // ==========================================
     window.MASTER_ADMIN_EMAIL = "abisali1245@gmail.com"; // <-- Type your exact Google login email here
     window.RYAL_USDA_KEY = "rB7nbYA6O8O2Pi6WPAfgFBEwgvIdjF0Vz2mrvLTI";
     
@@ -150,17 +150,28 @@ import { getFirestore, doc, setDoc, getDoc, collection, addDoc, enableIndexedDbP
 
     window.showMenuSection = (id) => { 
         window.closeMenu(); 
+        
+        // --- STRICT SECURITY LOCK ---
+        const restrictedSections = ['sec-master-routine', 'sec-library', 'sec-research', 'sec-endo'];
+        const isAdmin = window.currentUser && (window.currentUser.email === window.MASTER_ADMIN_EMAIL);
+        
+        if (restrictedSections.includes(id) && !isAdmin) {
+            return window.showAlert("Access Denied: This feature is restricted to Master Admin only.");
+        }
+
         const sections = ['sec-leads', 'sec-exp', 'sec-master-routine', 'sec-library', 'sec-research', 'sec-endo', 'sec-support'];
         sections.forEach(x => { 
             let el = document.getElementById(x); 
             if(el) el.style.display = 'none'; 
         }); 
+        
         let target = document.getElementById(id); 
         if(target) { 
             target.style.display = 'block'; 
             target.scrollIntoView({ behavior: 'smooth' }); 
         } 
     };
+
 
     window.showAlert = (msg) => { 
         return new Promise(resolve => { 
@@ -1618,4 +1629,3 @@ window.installVipApp = async () => {
         window.deferredPrompt = null;
     }
 };
-
