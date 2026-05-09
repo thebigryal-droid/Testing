@@ -6,6 +6,7 @@ import { getFirestore, doc, setDoc, getDoc, collection, addDoc, enableIndexedDbP
     // ==========================================
     // 1. CORE CONFIGURATION
     // ==========================================
+    window.MASTER_ADMIN_EMAIL = "abisali1245@gmail.com"; // <-- Type your exact Google login email here
     window.RYAL_USDA_KEY = "rB7nbYA6O8O2Pi6WPAfgFBEwgvIdjF0Vz2mrvLTI";
     
         // Pull the key from the browser's local memory
@@ -234,6 +235,23 @@ window.closeModalSafe = () => {
             if(!document.getElementById('attOut').value) {
                 document.getElementById('attOut').value = window.trainerProfile.shiftOut; 
             }
+
+            // --- ADMIN AUTHORITY CHECK ---
+            const isAdmin = (window.trainerProfile.email === window.MASTER_ADMIN_EMAIL);
+            
+            // Show or hide the restricted menu buttons
+            document.querySelectorAll('.admin-only').forEach(el => {
+                el.style.display = isAdmin ? 'flex' : 'none'; 
+            });
+
+            // Update the "PRO ACCOUNT" pill text based on authority
+            const pill = document.querySelector('.pro-pill');
+            if(pill) {
+                pill.innerText = isAdmin ? "MASTER ADMIN" : "BASIC TIER";
+                pill.style.background = isAdmin ? "rgba(151, 7, 71, 0.1)" : "rgba(107, 114, 128, 0.1)";
+                pill.style.color = isAdmin ? "var(--primary)" : "var(--text-muted)";
+                pill.style.borderColor = isAdmin ? "rgba(151, 7, 71, 0.2)" : "rgba(107, 114, 128, 0.2)";
+            }
         }
         
         document.getElementById('attDate').value = window.today; 
@@ -242,6 +260,7 @@ window.closeModalSafe = () => {
         
         setTimeout(() => window.updateIcons(), 100);
     };
+
 
     window.render = () => {
         requestAnimationFrame(() => {
