@@ -1362,15 +1362,17 @@ window.closeModalSafe = () => {
 
         if (c.bca && c.bca.length) {
             const bcaReversed = [...c.bca].reverse(); 
-            if (window.vipBcaChartInst) window.vipBcaChartInst.destroy();
-            window.vipBcaChartInst = new Chart(document.getElementById('vipBcaChart').getContext('2d'), {
-                type: 'line',
-                data: { labels: bcaReversed.map(b => b.date.slice(5)), datasets: [
-                    { label: 'Weight (kg)', data: bcaReversed.map(b => b.w), borderColor: '#970747', backgroundColor: '#970747', tension: 0.3 },
-                    { label: 'Body Fat %', data: bcaReversed.map(b => b.pbf), borderColor: '#ef4444', backgroundColor: '#ef4444', tension: 0.3 }
-                ]},
-                options: { responsive: true, scales: { x: { display: true }, y: { display: false } } }
-            });
+                if (window.vipBcaChartInst) window.vipBcaChartInst.destroy();
+        window.vipBcaChartInst = new Chart(document.getElementById('vipBcaChart').getContext('2d'), {
+            type: 'line',
+            data: { labels: bcaReversed.map(b => b.date.slice(5)), datasets: [
+                { label: 'Weight (kg)', data: bcaReversed.map(b => b.w), borderColor: '#970747', backgroundColor: '#970747', tension: 0.3 },
+                { label: 'Body Fat %', data: bcaReversed.map(b => b.pbf), borderColor: '#ef4444', backgroundColor: '#ef4444', tension: 0.3 },
+                { label: 'SMM (kg)', data: bcaReversed.map(b => b.smm), borderColor: '#10b981', backgroundColor: '#10b981', tension: 0.3 }
+            ]},
+            options: { responsive: true, scales: { x: { display: true }, y: { display: false } } }
+        });
+
             document.getElementById('vipBcaList').innerHTML = c.bca.map(b => `<div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px dashed var(--border); font-size:12px;"><span style="color:var(--text-muted); font-weight:800;">${b.date}</span><span><b style="color:var(--primary);">${b.w}kg</b> | ${b.pbf}% Fat | ${b.smm}kg SMM</span></div>`).join('');
         }
 
