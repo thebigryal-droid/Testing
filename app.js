@@ -1,25 +1,22 @@
-
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc, collection, addDoc, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    // ==========================================
-    // 1. CORE CONFIGURATION
-    // ==========================================
-    window.MASTER_ADMIN_EMAIL = "abisali1245@gmail.com"; // <-- Type your exact Google login email here
-    window.RYAL_USDA_KEY = "rB7nbYA6O8O2Pi6WPAfgFBEwgvIdjF0Vz2mrvLTI";
-    
-        // Pull the key from the browser's local memory
-    window.RYAL_AI_KEY = localStorage.getItem("ryal_ai_secret_key");
+// ==========================================
+// 1. CORE CONFIGURATION
+// ==========================================
+window.MASTER_ADMIN_EMAIL = "abisali1245@gmail.com"; 
+window.RYAL_USDA_KEY = "rB7nbYA6O8O2Pi6WPAfgFBEwgvIdjF0Vz2mrvLTI";
 
-    // Check if the current URL is a VIP portal link
-    const isVipLink = new URLSearchParams(window.location.search).get('vip');
+// Pull the key from the browser's local memory silently
+window.RYAL_AI_KEY = localStorage.getItem("ryal_ai_secret_key");
 
+// Check if the current URL is a VIP portal link
+const isVipLink = new URLSearchParams(window.location.search).get('vip');
 
-    window.onerror = function(msg, url, line) { 
-        console.error("RyalFit Error: " + msg + " at line " + line); 
-    };
-
+window.onerror = function(msg, url, line) { 
+    console.error("RyalFit Error: " + msg + " at line " + line); 
+};
     // Your brand new rfth-pro Firebase Engine
     const app = initializeApp({ 
         apiKey: "AIzaSyCCB71JtHMCWCG4kNs6XkcGYwvu-2k8JiQ",
