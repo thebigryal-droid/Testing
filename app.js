@@ -15,9 +15,7 @@ import { getFirestore, doc, setDoc, getDoc, collection, addDoc, enableIndexedDbP
     // Check if the current URL is a VIP portal link
     const isVipLink = new URLSearchParams(window.location.search).get('vip');
 
-    // ONLY prompt for the key if it is missing AND it is NOT a VIP client
-    if (!window.RYAL_AI_KEY && !isVipLink) {
-        window.RYAL_AI_KEY = prompt("Enter your Gemini API Key for this device:");
+
         if (window.RYAL_AI_KEY) {
             localStorage.setItem("ryal_ai_secret_key", window.RYAL_AI_KEY);
         }
@@ -248,12 +246,28 @@ window.closeModalSafe = () => {
             }
 
             // --- ADMIN AUTHORITY CHECK ---
-            const isAdmin = (window.trainerProfile.email === window.MASTER_ADMIN_EMAIL);
+            const isAdmin = window.currentUser && (window.currentUser.email === window.MASTER_ADMIN_EMAIL);
             
-            // Show or hide the restricted menu buttons
+            if (isAdmin) {
+                // If you are the Admin and the key isn't saved, ask for it
+                if (!window.RYAL_AI_KEY) {
+                    window.RYAL_AI_KEY = prompt("Welcome Admin! Enter your Gemini API Key for this device:");
+                    if (window.RYAL_AI_KEY) {
+                        localStorage.setItem("ryal_ai_secret_key", window.RYAL_AI_KEY);
+                    }
+                }
+            }
+
+            // Show or hide the restricted menu buttons & AI tools
             document.querySelectorAll('.admin-only').forEach(el => {
-                el.style.display = isAdmin ? 'flex' : 'none'; 
+                // Use 'flex' for buttons/links, and 'block' for section containers
+                if (el.tagName === 'A' || el.tagName === 'BUTTON') {
+                    el.style.display = isAdmin ? 'flex' : 'none';
+                } else {
+                    el.style.display = isAdmin ? 'block' : 'none';
+                }
             });
+
 
             // Update the "PRO ACCOUNT" pill text based on authority
             const pill = document.querySelector('.pro-pill');
@@ -961,7 +975,21 @@ window.closeModalSafe = () => {
         let macros = c && c.macros ? `${c.macros.p}g Pro, ${c.macros.c}g Carb, ${c.macros.f}g Fat` : "Not calculated"; 
         let recentWorkouts = c && c.logs ? Object.keys(c.logs).sort().reverse().slice(0, 3).map(d => `${d}: ${c.logs[d].map(l => l.name).join(', ')}`).join(' | ') : "No data"; 
         
-        const prompt = `Act as an elite sports scientist. Review this client and answer based on this clinical data. Format with basic HTML (<b>, <br>) but NO markdown. Question: "${msg}"\n\nClient Data: ${c ? c.name : 'Unknown'}\nGoal: ${c ? c.goal : 'Not specified'}\nBody: ${w}kg, Fat ${pbf}%\nMacros: ${macros}\nRecent Logs:\n${recentWorkouts}`; 
+                const prompt = `You are Sam, an elite AI sports scientist and coaching co-pilot built into the Ryal FitHub Pro operating system.
+You are currently speaking to Coach ${window.trainerProfile.name}.
+You are currently looking at the profile for their client: ${c ? c.name : 'Unknown'}.
+Client Details -> Goal: ${c ? c.goal : 'Not specified'} | Body: ${w}kg, Fat: ${pbf}% | Macros: ${macros}
+Recent Workouts: ${recentWorkouts}
+
+STRICT INSTRUCTIONS:
+1. Be highly intelligent, conversational, and professional.
+2. If the Coach just greets you (e.g., "Hi", "Hello"), politely greet them back by name, acknowledge that you have ${c ? c.name : 'the client'}'s profile open, and ask how you can help optimize their plan today. Do NOT spit out a full analysis just for a greeting.
+3. If the Coach asks a specific question, use the provided client data to give a highly tailored, clinical answer.
+4. Format your response using basic HTML tags (<b> for bold, <br> for line breaks, <ul>/<li> for lists).
+5. DO NOT use any markdown (no asterisks **, no hash tags #).
+
+Coach's Message: "${msg}"`;
+
         
         try { 
             const response = await fetchWithTimeout(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${window.RYAL_AI_KEY}`, { 
@@ -1629,3 +1657,4 @@ window.installVipApp = async () => {
         window.deferredPrompt = null;
     }
 };
+
